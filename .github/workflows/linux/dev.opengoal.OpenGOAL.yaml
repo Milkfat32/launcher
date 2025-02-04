@@ -39,6 +39,8 @@ modules:
         YARN_DISABLE_SELF_UPDATE_CHECK: true
     build-commands:
       - HOME=$PWD yarn config --offline set yarn-offline-mirror $FLATPAK_BUILDER_BUILDDIR/flatpak-node/yarn-mirror
+      - HOME=$PWD yarn config set yarn-offline-mirror-pruning true
+      - mv ~/ .yarnrc ./
       - HOME=$PWD yarn --offline
       - cargo --offline fetch --manifest-path src-tauri/Cargo.toml
       - HOME=$PWD yarn tauri build
