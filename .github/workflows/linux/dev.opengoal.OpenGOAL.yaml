@@ -38,10 +38,10 @@ modules:
         npm_config_nodedir: /usr/lib/sdk/node20
         YARN_DISABLE_SELF_UPDATE_CHECK: true
     build-commands:
-      - HOME=/ yarn config --offline set yarn-offline-mirror /yarn-mirror
-      - yarn --offline
+      - HOME=$PWD yarn config --offline set yarn-offline-mirror $FLATPAK_BUILDER_BUILDDIR/flatpak-node/yarn-mirror
+      - HOME=$PWD yarn --offline
       - cargo --offline fetch --manifest-path src-tauri/Cargo.toml
-      - yarn tauri build
+      - HOME=$PWD yarn tauri build
       - install -Dm755 -t /app/bin/ src-tauri/target/release/OpenGOAL-Launcher
       - install -Dm644 -t /app/share/metainfo/ dev.opengoal.OpenGOAL.appdata.xml
       - install -Dm644 resources/icons/32.png /app/share/icons/hicolor/32x32/apps/dev.opengoal.OpenGOAL.png
