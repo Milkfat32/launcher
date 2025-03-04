@@ -29,27 +29,27 @@ jobs:
       #       runtime/org.freedesktop.Sdk.Extension.rust-stable/x86_64/24.08 \
       #       runtime/org.freedesktop.Sdk.Extension.node20/x86_64/24.08
 
-      - name: Clone Flatpak Builder Tools
-        run: |
-          git clone --depth=1 https://github.com/flatpak/flatpak-builder-tools.git
+      # - name: Clone Flatpak Builder Tools
+      #   run: |
+      #     git clone --depth=1 https://github.com/flatpak/flatpak-builder-tools.git
 
-      - uses: actions/setup-python@v5
-        with:
-          python-version: 3.9
+      # - uses: actions/setup-python@v5
+      #   with:
+      #     python-version: 3.9
 
-      - name: Install flatpak-node-generator and requirements
-        run: |
-          python3 -m pip install pipx pipreqs
-          pipreqs flatpak-builder-tools
-          python3 -m pip install -r flatpak-builder-tools/requirements.txt
-          cd flatpak-builder-tools/node && pipx install .
-          pipx ensurepath
+      # - name: Install flatpak-node-generator and requirements
+      #   run: |
+      #     python3 -m pip install pipx pipreqs
+      #     pipreqs flatpak-builder-tools
+      #     python3 -m pip install -r flatpak-builder-tools/requirements.txt
+      #     cd flatpak-builder-tools/node && pipx install .
+      #     pipx ensurepath
 
-      - name: Generate Sources
-        run: |
-          export PATH=$PATH:/github/home/.local/bin
-          flatpak-builder-tools/cargo/flatpak-cargo-generator.py -o .github/workflows/linux/cargo-sources.json src-tauri/Cargo.lock
-          flatpak-node-generator --no-requests-cache -r -o .github/workflows/linux/yarn-sources.json yarn yarn.lock
+      # - name: Generate Sources
+      #   run: |
+      #     export PATH=$PATH:/github/home/.local/bin
+      #     flatpak-builder-tools/cargo/flatpak-cargo-generator.py -o .github/workflows/linux/cargo-sources.json src-tauri/Cargo.lock
+      #     flatpak-node-generator --no-requests-cache -r -o .github/workflows/linux/yarn-sources.json yarn yarn.lock
 
       - name: Build Flatpak
         uses: flathub-infra/flatpak-github-actions/flatpak-builder@23796715b3dfa4c86ddf50cf29c3cc8b3c82dca8
